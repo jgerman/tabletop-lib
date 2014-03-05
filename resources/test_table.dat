@@ -1,0 +1,8 @@
+{"name":"test_table",
+ "roll":"2d6",
+ "entries":  {"2":"rolled a 2",
+	       "3-5":"rolled a 3-5",
+	       "6-11":"rolled a 6-11",
+	       "12":"rolled a 12"
+	       }
+}
