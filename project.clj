@@ -6,4 +6,4 @@
   :aot [tabletop-lib.tables]
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [cheshire "5.3.1"]
-                 [instaparse "1.2.16"]])
+                 [instaparse "1.2.16-segment-fork"]])

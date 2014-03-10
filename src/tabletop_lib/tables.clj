@@ -1,6 +1,8 @@
 (ns tabletop-lib.tables
   (:gen-class
-   :methods [#^{:static true} [roll_on_table [String] String]])
+   :methods [#^{:static true} [roll_on_table [String] String]
+             #^{:static true} [lookup_in_table [String String] String]]
+            )
   (:require [cheshire.core :as json]
             [instaparse.core :as insta]
             [tabletop-lib.dice :as dice]))
@@ -26,7 +28,12 @@
     (in-range x r))
   )
 
-(defn table-lookup [roll table]
+(defn table-lookup [key table]
+  (let [table-def (json/parse-string table true)
+        entries (table-def :entries)]
+    (entries (keyword  key))))
+
+(defn roll-table-lookup [roll table]
   "A roll is an integer a table is a set of key value pairs, keys are ranges, values are the table entries"
   (let [key (first (filter #(in-keyrange roll %) (keys table)))]
       (table key)))
@@ -36,8 +43,14 @@
   (let [table-def (json/parse-string table true)
         d (table-def :roll)
         entries (table-def :entries)]
-    (table-lookup (dice/roll d) entries))
+    (roll-table-lookup (dice/roll d) entries))
   )
+
+
+
+
+(defn -lookup_in_table [key table]
+  (table-lookup key table))
 
 (defn -roll_on_table [table]
   (roll-on-table table))
